@@ -16,9 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * The catalog exposes one curated MCP tool per domain, not one per ability, and is
  * extensible through public filters. This class is the add-on's whole MCP surface:
- * it contributes a `forms` domain (so the server builds a `forms` tool over the
- * `cf7/*` abilities), a human description for that domain, and the
- * {@see SetUpContactForm} recipe to the cross-cutting `skills` tool.
+ * it registers a `forms` domain tool — its description and the `cf7/*` abilities it
+ * owns, in one place — and adds the {@see SetUpContactForm} recipe to the
+ * cross-cutting `skills` tool.
  *
  * Every contribution is gated on {@see Cf7Plugin::isActive()} at filter-run time
  * (filters fire while the server boots, after plugins load), so when Contact Form 7
@@ -32,10 +32,6 @@ final class Integration {
 
 	/**
 	 * The exact `cf7/*` ability names the `forms` domain tool owns, in tool order.
-	 *
-	 * The catalog's curated prefix rules are not filterable (core's taxonomy), so an
-	 * add-on places its abilities by exact name through the
-	 * `abilities_catalog_mcp_domain_map` filter.
 	 *
 	 * @var list<string>
 	 */
@@ -54,48 +50,32 @@ final class Integration {
 	 * @return void
 	 */
 	public static function register(): void {
-		add_filter( 'abilities_catalog_mcp_domain_map', array( self::class, 'contributeDomain' ) );
-		add_filter( 'abilities_catalog_mcp_domain_descriptions', array( self::class, 'contributeDescription' ) );
+		add_filter( 'abilities_catalog_mcp_domains', array( self::class, 'contributeDomain' ) );
 		add_filter( 'abilities_catalog_mcp_skills', array( self::class, 'contributeSkill' ) );
 	}
 
 	/**
-	 * Places the `cf7/*` abilities into a `forms` domain.
+	 * Registers the `forms` domain tool — its description and the abilities it owns.
 	 *
-	 * Preserves the placements already present and adds the `forms` key, so the
-	 * server opens a new `forms` tool. Skipped when CF7 is inactive (the abilities
-	 * are not registered then, so an empty tool would only confuse an agent).
+	 * One call defines the whole tool: the server builds a `forms` tool, routes the
+	 * `cf7/*` abilities to it, and uses the description as the tool's routing blurb.
+	 * Skipped when CF7 is inactive (the abilities are not registered then, so an empty
+	 * tool would only confuse an agent).
 	 *
-	 * @param array<string, list<string>> $map Domain slug => exact ability names placed in that domain.
-	 * @return array<string, list<string>> The map including the `forms` placements.
+	 * @param array<string, array{description: string, abilities: list<string>}> $domains Add-on domain slug => its tool descriptor.
+	 * @return array<string, array{description: string, abilities: list<string>}> The map including the `forms` tool.
 	 */
-	public static function contributeDomain( array $map ): array {
+	public static function contributeDomain( array $domains ): array {
 		if ( ! Cf7Plugin::isActive() ) {
-			return $map;
+			return $domains;
 		}
 
-		$map['forms'] = self::FORMS_ABILITIES;
+		$domains['forms'] = array(
+			'description' => __( 'Manage Contact Form 7 contact forms — list, read, create, update, duplicate and delete forms, and obtain a form\'s shortcode for embedding.', 'abilities-catalog-cf7' ),
+			'abilities'   => self::FORMS_ABILITIES,
+		);
 
-		return $map;
-	}
-
-	/**
-	 * Supplies the human capability blurb for the `forms` domain tool.
-	 *
-	 * Without this, an add-on's domain falls back to the catalog's generic
-	 * "another plugin contributed" description. Skipped when CF7 is inactive.
-	 *
-	 * @param array<string, string> $descriptions Domain slug => capability blurb.
-	 * @return array<string, string> The map including the `forms` blurb.
-	 */
-	public static function contributeDescription( array $descriptions ): array {
-		if ( ! Cf7Plugin::isActive() ) {
-			return $descriptions;
-		}
-
-		$descriptions['forms'] = __( 'Manage Contact Form 7 contact forms — list, read, create, update, duplicate and delete forms, and obtain a form\'s shortcode for embedding.', 'abilities-catalog-cf7' );
-
-		return $descriptions;
+		return $domains;
 	}
 
 	/**
