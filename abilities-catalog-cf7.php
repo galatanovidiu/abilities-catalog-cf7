@@ -9,8 +9,8 @@
  * Requires Plugins:  contact-form-7
  * Author:            Ovidiu Galatan
  * Author URI:        https://github.com/galatanovidiu
- * License:           GPL-2.0-or-later
- * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * License:           MIT
+ * License URI:       https://opensource.org/license/mit
  * Text Domain:       abilities-catalog-cf7
  *
  * @package AbilitiesCatalogCf7

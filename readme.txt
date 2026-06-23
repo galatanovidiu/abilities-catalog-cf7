@@ -5,8 +5,8 @@ Requires at least: 7.0
 Tested up to: 7.0
 Requires PHP: 8.1
 Stable tag: 0.1.0
-License: GPL-2.0-or-later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+License: MIT
+License URI: https://opensource.org/license/mit
 
 Registers Contact Form 7 forms as Abilities API abilities. An add-on for Abilities Catalog.
 

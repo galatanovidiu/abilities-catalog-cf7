@@ -1,7 +1,7 @@
 {
 	"name": "galatanovidiu/abilities-catalog-cf7",
 	"description": "Registers Contact Form 7 forms as Abilities API abilities. An add-on for Abilities Catalog.",
-	"license": "GPL-2.0-or-later",
+	"license": "MIT",
 	"type": "wordpress-plugin",
 	"keywords": [
 		"wordpress",

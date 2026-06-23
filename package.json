@@ -2,6 +2,7 @@
 	"name": "abilities-catalog-cf7",
 	"type": "module",
 	"private": true,
+	"license": "MIT",
 	"files": [
 		"abilities-catalog-cf7.php",
 		"readme.txt",
