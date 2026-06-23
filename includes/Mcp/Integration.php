@@ -16,13 +16,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * The catalog exposes one curated MCP tool per domain, not one per ability, and is
  * extensible through public filters. This class is the add-on's whole MCP surface:
- * it registers a `forms` domain tool — its description and the `cf7/*` abilities it
+ * it registers a `cf7` domain tool — its description and the `cf7/*` abilities it
  * owns, in one place — and adds the {@see SetUpContactForm} recipe to the
  * cross-cutting `skills` tool.
  *
  * Every contribution is gated on {@see Cf7Plugin::isActive()} at filter-run time
  * (filters fire while the server boots, after plugins load), so when Contact Form 7
- * is inactive the `cf7/*` abilities do not register and no empty `forms` tool or
+ * is inactive the `cf7/*` abilities do not register and no empty `cf7` tool or
  * dangling skill appears. The filters are catalog hooks: when the catalog or its
  * MCP server is absent, nothing applies them and the add-on stays inert here.
  *
@@ -31,11 +31,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class Integration {
 
 	/**
-	 * The exact `cf7/*` ability names the `forms` domain tool owns, in tool order.
+	 * The exact `cf7/*` ability names the `cf7` domain tool owns, in tool order.
 	 *
 	 * @var list<string>
 	 */
-	private const FORMS_ABILITIES = array(
+	private const CF7_ABILITIES = array(
 		'cf7/list-forms',
 		'cf7/get-form',
 		'cf7/create-form',
@@ -55,24 +55,24 @@ final class Integration {
 	}
 
 	/**
-	 * Registers the `forms` domain tool — its description and the abilities it owns.
+	 * Registers the `cf7` domain tool — its description and the abilities it owns.
 	 *
-	 * One call defines the whole tool: the server builds a `forms` tool, routes the
+	 * One call defines the whole tool: the server builds a `cf7` tool, routes the
 	 * `cf7/*` abilities to it, and uses the description as the tool's routing blurb.
 	 * Skipped when CF7 is inactive (the abilities are not registered then, so an empty
 	 * tool would only confuse an agent).
 	 *
 	 * @param array<string, array{description: string, abilities: list<string>}> $domains Add-on domain slug => its tool descriptor.
-	 * @return array<string, array{description: string, abilities: list<string>}> The map including the `forms` tool.
+	 * @return array<string, array{description: string, abilities: list<string>}> The map including the `cf7` tool.
 	 */
 	public static function contributeDomain( array $domains ): array {
 		if ( ! Cf7Plugin::isActive() ) {
 			return $domains;
 		}
 
-		$domains['forms'] = array(
+		$domains['cf7'] = array(
 			'description' => __( 'Manage Contact Form 7 contact forms — list, read, create, update, duplicate and delete forms, and obtain a form\'s shortcode for embedding.', 'abilities-catalog-cf7' ),
-			'abilities'   => self::FORMS_ABILITIES,
+			'abilities'   => self::CF7_ABILITIES,
 		);
 
 		return $domains;
@@ -81,7 +81,7 @@ final class Integration {
 	/**
 	 * Adds the "set up a contact form" recipe to the `skills` tool.
 	 *
-	 * The recipe chains the `forms` domain into `content` (find/create a form, then
+	 * The recipe chains the `cf7` domain into `content` (find/create a form, then
 	 * embed its shortcode on a page). Its body stays a callable so it costs no
 	 * context until a `skills` get resolves it. Skipped when CF7 is inactive.
 	 *

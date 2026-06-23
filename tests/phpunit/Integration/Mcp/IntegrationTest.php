@@ -15,7 +15,7 @@ use GalatanOvidiu\AbilitiesCatalogCf7\Support\Cf7Plugin;
 use GalatanOvidiu\AbilitiesCatalogCf7\Tests\TestCase;
 
 /**
- * The integration registers a `forms` domain tool and a skill with the catalog's
+ * The integration registers a `cf7` domain tool and a skill with the catalog's
  * MCP server through public filters. These assert the descriptor shape and — the
  * point of the guard — that every ability the tool lists is actually registered, so
  * the hand-kept name list cannot drift away from the ability classes.
@@ -36,31 +36,31 @@ final class IntegrationTest extends TestCase {
 	}
 
 	/**
-	 * contributeDomain registers a described `forms` tool with its abilities.
+	 * contributeDomain registers a described `cf7` tool with its abilities.
 	 *
 	 * @return void
 	 */
-	public function test_contribute_domain_registers_a_described_forms_tool(): void {
+	public function test_contribute_domain_registers_a_described_cf7_tool(): void {
 		$domains = Integration::contributeDomain( array() );
 
-		$this->assertArrayHasKey( 'forms', $domains );
-		$this->assertIsString( $domains['forms']['description'] );
-		$this->assertNotEmpty( $domains['forms']['description'] );
-		$this->assertNotEmpty( $domains['forms']['abilities'] );
+		$this->assertArrayHasKey( 'cf7', $domains );
+		$this->assertIsString( $domains['cf7']['description'] );
+		$this->assertNotEmpty( $domains['cf7']['description'] );
+		$this->assertNotEmpty( $domains['cf7']['abilities'] );
 	}
 
 	/**
-	 * Every ability the `forms` tool lists is a registered ability (no name drift).
+	 * Every ability the `cf7` tool lists is a registered ability (no name drift).
 	 *
 	 * @return void
 	 */
 	public function test_every_listed_ability_is_registered(): void {
 		$domains = Integration::contributeDomain( array() );
 
-		foreach ( $domains['forms']['abilities'] as $name ) {
+		foreach ( $domains['cf7']['abilities'] as $name ) {
 			$this->assertTrue(
 				wp_has_ability( $name ),
-				sprintf( 'The forms tool lists "%s", which is not a registered ability.', $name )
+				sprintf( 'The cf7 tool lists "%s", which is not a registered ability.', $name )
 			);
 		}
 	}
