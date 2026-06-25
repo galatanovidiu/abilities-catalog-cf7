@@ -40,7 +40,7 @@ final class CategoryCatalog implements CategoryProvider {
 		return array(
 			'og-cf7' => array(
 				'slug'        => 'og-cf7',
-				'label'       => __( 'Contact Form 7', 'abilities-catalog-cf7' ),
+				'label'       => __( 'OG Contact Form 7', 'abilities-catalog-cf7' ),
 				'description' => __( 'Abilities that read, create, update, duplicate, and delete Contact Form 7 contact forms, and obtain a form\'s shortcode for embedding.', 'abilities-catalog-cf7' ),
 			),
 		);
