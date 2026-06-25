@@ -2,33 +2,33 @@
 
 Registers [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) (CF7) forms on the WordPress **Abilities API** (ships in WP 7.0 core), so any Abilities API consumer can list, read, create, update, duplicate, and delete CF7 forms — each gated by CF7's own capabilities.
 
-It is **consumer-agnostic** and works standalone on the core Abilities API. The [Abilities Catalog](https://github.com/galatanovidiu/abilities-catalog) is optional: when its MCP server is active, this add-on contributes a curated **cf7** domain tool over the `cf7/*` abilities and an OKF knowledge bundle (the **set-up-contact-form** concept), through the catalog's public filters. No core files of Abilities Catalog are modified.
+It is **consumer-agnostic** and works standalone on the core Abilities API. The [Abilities Catalog](https://github.com/galatanovidiu/abilities-catalog) is optional: when its MCP server is active, this add-on contributes a curated **contact-form-7** domain tool over the `og-cf7/*` abilities and an OKF knowledge bundle (the **set-up-contact-form** concept), through the catalog's public filters. No core files of Abilities Catalog are modified.
 
-Contact Form 7 is a hard runtime dependency: while CF7 is inactive the `cf7/*` abilities do not register at all (they are absent from the Abilities API, not registered-and-denying), and the cf7 domain tool and knowledge concept do not appear.
+Contact Form 7 is a hard runtime dependency: while CF7 is inactive the `og-cf7/*` abilities do not register at all (they are absent from the Abilities API, not registered-and-denying), and the contact-form-7 domain tool and knowledge concept do not appear.
 
 ## Requirements
 
 - WordPress 7.0+ (for the core Abilities API)
 - PHP 8.1+
 - Contact Form 7 (active)
-- Optional: Abilities Catalog, for the MCP cf7 tool and setup knowledge concept
+- Optional: Abilities Catalog, for the MCP contact-form-7 tool and setup knowledge concept
 
 ## Abilities
 
 | Ability | Type | What it does |
 |---|---|---|
-| `cf7/list-forms` | read | list and search forms |
-| `cf7/get-form` | read | read one form's full configuration and shortcode |
-| `cf7/create-form` | write | create a form |
-| `cf7/update-form` | write | update a form |
-| `cf7/duplicate-form` | write | copy a form |
-| `cf7/delete-form` | destructive write | permanently delete a form |
+| `og-cf7/list-forms` | read | list and search forms |
+| `og-cf7/get-form` | read | read one form's full configuration and shortcode |
+| `og-cf7/create-form` | write | create a form |
+| `og-cf7/update-form` | write | update a form |
+| `og-cf7/duplicate-form` | write | copy a form |
+| `og-cf7/delete-form` | destructive write | permanently delete a form |
 
 ## Installation
 
 1. Install and activate Contact Form 7.
-2. Install and activate this plugin. The `cf7/*` abilities register automatically — no build step.
-3. Optional: install Abilities Catalog and enable its MCP server to expose the cf7 domain tool and the set-up-contact-form knowledge concept.
+2. Install and activate this plugin. The `og-cf7/*` abilities register automatically — no build step.
+3. Optional: install Abilities Catalog and enable its MCP server to expose the contact-form-7 domain tool and the set-up-contact-form knowledge concept.
 
 ## Development
 

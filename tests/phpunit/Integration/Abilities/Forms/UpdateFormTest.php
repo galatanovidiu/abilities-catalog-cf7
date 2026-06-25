@@ -1,6 +1,6 @@
 <?php
 /**
- * Integration tests for the cf7/update-form ability.
+ * Integration tests for the og-cf7/update-form ability.
  *
  * @package AbilitiesCatalogCf7\Tests
  */
@@ -12,23 +12,23 @@ namespace GalatanOvidiu\AbilitiesCatalogCf7\Tests\Integration\Abilities\Forms;
 use WP_Error;
 
 /**
- * Exercises cf7/update-form: persistence, the previous/resulting mail transparency,
+ * Exercises og-cf7/update-form: persistence, the previous/resulting mail transparency,
  * and the missing-form 404.
  */
 final class UpdateFormTest extends Cf7FormsTestCase {
 
 	public function test_ability_is_registered(): void {
-		$ability = wp_get_ability( 'cf7/update-form' );
+		$ability = wp_get_ability( 'og-cf7/update-form' );
 
 		$this->assertNotNull( $ability );
-		$this->assertSame( 'cf7/update-form', $ability->get_name() );
+		$this->assertSame( 'og-cf7/update-form', $ability->get_name() );
 	}
 
 	public function test_update_persists_new_title(): void {
 		$this->actingAs( 'administrator' );
 		$id = $this->seedForm( array( 'title' => 'Before' ) );
 
-		$result = wp_get_ability( 'cf7/update-form' )->execute(
+		$result = wp_get_ability( 'og-cf7/update-form' )->execute(
 			array(
 				'id'    => $id,
 				'title' => 'After',
@@ -51,7 +51,7 @@ final class UpdateFormTest extends Cf7FormsTestCase {
 			)
 		);
 
-		$result = wp_get_ability( 'cf7/update-form' )->execute(
+		$result = wp_get_ability( 'og-cf7/update-form' )->execute(
 			array(
 				'id'   => $id,
 				'mail' => array(
@@ -77,7 +77,7 @@ final class UpdateFormTest extends Cf7FormsTestCase {
 	public function test_missing_form_returns_404_not_permission_error(): void {
 		$this->actingAs( 'administrator' );
 
-		$result = wp_get_ability( 'cf7/update-form' )->execute(
+		$result = wp_get_ability( 'og-cf7/update-form' )->execute(
 			array(
 				'id'    => 99999999,
 				'title' => 'Ghost',
@@ -93,7 +93,7 @@ final class UpdateFormTest extends Cf7FormsTestCase {
 		$id = $this->seedForm( array( 'title' => 'Untouched' ) );
 		$this->actingAs( 'subscriber' );
 
-		$result = wp_get_ability( 'cf7/update-form' )->execute(
+		$result = wp_get_ability( 'og-cf7/update-form' )->execute(
 			array(
 				'id'    => $id,
 				'title' => 'Hacked',

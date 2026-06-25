@@ -1,6 +1,6 @@
 <?php
 /**
- * Integration tests for the cf7/list-forms ability.
+ * Integration tests for the og-cf7/list-forms ability.
  *
  * @package AbilitiesCatalogCf7\Tests
  */
@@ -12,22 +12,22 @@ namespace GalatanOvidiu\AbilitiesCatalogCf7\Tests\Integration\Abilities\Forms;
 use WP_Error;
 
 /**
- * Exercises cf7/list-forms: shaped rows, the embeddable shortcode, and the guard.
+ * Exercises og-cf7/list-forms: shaped rows, the embeddable shortcode, and the guard.
  */
 final class ListFormsTest extends Cf7FormsTestCase {
 
 	public function test_ability_is_registered(): void {
-		$ability = wp_get_ability( 'cf7/list-forms' );
+		$ability = wp_get_ability( 'og-cf7/list-forms' );
 
 		$this->assertNotNull( $ability );
-		$this->assertSame( 'cf7/list-forms', $ability->get_name() );
+		$this->assertSame( 'og-cf7/list-forms', $ability->get_name() );
 	}
 
 	public function test_admin_lists_forms_with_shortcode(): void {
 		$this->actingAs( 'administrator' );
 		$id = $this->seedForm( array( 'title' => 'Listed form' ) );
 
-		$result = wp_get_ability( 'cf7/list-forms' )->execute( array() );
+		$result = wp_get_ability( 'og-cf7/list-forms' )->execute( array() );
 
 		$this->assertIsArray( $result );
 		$this->assertSame( array( 'items', 'total' ), array_keys( $result ) );
@@ -56,7 +56,7 @@ final class ListFormsTest extends Cf7FormsTestCase {
 		$this->seedForm( array( 'title' => 'Newsletter signup' ) );
 		$this->seedForm( array( 'title' => 'Support request' ) );
 
-		$result = wp_get_ability( 'cf7/list-forms' )->execute( array( 'search' => 'Newsletter' ) );
+		$result = wp_get_ability( 'og-cf7/list-forms' )->execute( array( 'search' => 'Newsletter' ) );
 
 		$this->assertIsArray( $result );
 		$titles = wp_list_pluck( $result['items'], 'title' );
@@ -68,7 +68,7 @@ final class ListFormsTest extends Cf7FormsTestCase {
 		$this->seedForm();
 		wp_set_current_user( 0 );
 
-		$result = wp_get_ability( 'cf7/list-forms' )->execute( array() );
+		$result = wp_get_ability( 'og-cf7/list-forms' )->execute( array() );
 
 		$this->assertInstanceOf( WP_Error::class, $result );
 		$this->assertSame( 'ability_invalid_permissions', $result->get_error_code() );
@@ -78,7 +78,7 @@ final class ListFormsTest extends Cf7FormsTestCase {
 		$this->seedForm();
 		$this->actingAs( 'subscriber' );
 
-		$result = wp_get_ability( 'cf7/list-forms' )->execute( array() );
+		$result = wp_get_ability( 'og-cf7/list-forms' )->execute( array() );
 
 		$this->assertInstanceOf( WP_Error::class, $result );
 		$this->assertSame( 'ability_invalid_permissions', $result->get_error_code() );

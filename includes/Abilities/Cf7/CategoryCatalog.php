@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * The {@see \GalatanOvidiu\AbilitiesCatalogCf7\Registry} discovers this provider
  * alongside the abilities and registers its categories on
- * `wp_abilities_api_categories_init`. Every Cf7 ability references the `cf7`
+ * `wp_abilities_api_categories_init`. Every Cf7 ability references the `og-cf7`
  * category through `args()['category']`.
  *
  * The group's abilities only register when CF7 is active (they are
@@ -38,8 +38,8 @@ final class CategoryCatalog implements CategoryProvider {
 		}
 
 		return array(
-			'cf7' => array(
-				'slug'        => 'cf7',
+			'og-cf7' => array(
+				'slug'        => 'og-cf7',
 				'label'       => __( 'Contact Form 7', 'abilities-catalog-cf7' ),
 				'description' => __( 'Abilities that read, create, update, duplicate, and delete Contact Form 7 contact forms, and obtain a form\'s shortcode for embedding.', 'abilities-catalog-cf7' ),
 			),

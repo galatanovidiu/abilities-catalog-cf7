@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Shared request-forwarding and result-shaping for `cf7/create-form` and
- * `cf7/update-form`.
+ * Shared request-forwarding and result-shaping for `og-cf7/create-form` and
+ * `og-cf7/update-form`.
  *
  * Both abilities forward the same writable fields to the `contact-form-7/v1` save
  * route and project the same result, so that logic lives here once. The only

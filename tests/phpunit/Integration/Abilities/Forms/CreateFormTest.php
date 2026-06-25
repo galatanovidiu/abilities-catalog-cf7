@@ -1,6 +1,6 @@
 <?php
 /**
- * Integration tests for the cf7/create-form ability.
+ * Integration tests for the og-cf7/create-form ability.
  *
  * @package AbilitiesCatalogCf7\Tests
  */
@@ -13,22 +13,22 @@ use WP_Error;
 use WP_Post;
 
 /**
- * Exercises cf7/create-form: real persistence (the context=save requirement),
+ * Exercises og-cf7/create-form: real persistence (the context=save requirement),
  * default-template fallback, and the mail-transparency output.
  */
 final class CreateFormTest extends Cf7FormsTestCase {
 
 	public function test_ability_is_registered(): void {
-		$ability = wp_get_ability( 'cf7/create-form' );
+		$ability = wp_get_ability( 'og-cf7/create-form' );
 
 		$this->assertNotNull( $ability );
-		$this->assertSame( 'cf7/create-form', $ability->get_name() );
+		$this->assertSame( 'og-cf7/create-form', $ability->get_name() );
 	}
 
 	public function test_create_persists_the_form(): void {
 		$this->actingAs( 'administrator' );
 
-		$result = wp_get_ability( 'cf7/create-form' )->execute( array( 'title' => 'Contact us' ) );
+		$result = wp_get_ability( 'og-cf7/create-form' )->execute( array( 'title' => 'Contact us' ) );
 
 		$this->assertIsArray( $result );
 		$this->assertSame(
@@ -49,7 +49,7 @@ final class CreateFormTest extends Cf7FormsTestCase {
 	public function test_create_falls_back_to_default_template(): void {
 		$this->actingAs( 'administrator' );
 
-		$result = wp_get_ability( 'cf7/create-form' )->execute( array( 'title' => 'Default form' ) );
+		$result = wp_get_ability( 'og-cf7/create-form' )->execute( array( 'title' => 'Default form' ) );
 
 		$this->assertIsArray( $result );
 		$properties = (array) $result['properties'];
@@ -61,7 +61,7 @@ final class CreateFormTest extends Cf7FormsTestCase {
 	public function test_create_surfaces_chosen_mail_recipient(): void {
 		$this->actingAs( 'administrator' );
 
-		$result = wp_get_ability( 'cf7/create-form' )->execute(
+		$result = wp_get_ability( 'og-cf7/create-form' )->execute(
 			array(
 				'title' => 'Routed form',
 				'mail'  => array(
@@ -79,7 +79,7 @@ final class CreateFormTest extends Cf7FormsTestCase {
 	public function test_logged_out_user_is_denied(): void {
 		wp_set_current_user( 0 );
 
-		$result = wp_get_ability( 'cf7/create-form' )->execute( array( 'title' => 'Nope' ) );
+		$result = wp_get_ability( 'og-cf7/create-form' )->execute( array( 'title' => 'Nope' ) );
 
 		$this->assertInstanceOf( WP_Error::class, $result );
 		$this->assertSame( 'ability_invalid_permissions', $result->get_error_code() );
@@ -88,7 +88,7 @@ final class CreateFormTest extends Cf7FormsTestCase {
 	public function test_subscriber_is_denied(): void {
 		$this->actingAs( 'subscriber' );
 
-		$result = wp_get_ability( 'cf7/create-form' )->execute( array( 'title' => 'Nope' ) );
+		$result = wp_get_ability( 'og-cf7/create-form' )->execute( array( 'title' => 'Nope' ) );
 
 		$this->assertInstanceOf( WP_Error::class, $result );
 		$this->assertSame( 'ability_invalid_permissions', $result->get_error_code() );

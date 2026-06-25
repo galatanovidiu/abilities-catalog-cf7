@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Write ability: `cf7/duplicate-form`.
+ * Write ability: `og-cf7/duplicate-form`.
  *
  * CF7 exposes no REST route for copying a form, so this wraps the object method
  * directly through {@see Cf7Plugin::duplicate()} (`copy()` then `save()`, since the
@@ -34,7 +34,7 @@ final class DuplicateForm implements ConditionalAbility {
 	 * {@inheritDoc}
 	 */
 	public function name(): string {
-		return 'cf7/duplicate-form';
+		return 'og-cf7/duplicate-form';
 	}
 
 	/**
@@ -50,8 +50,8 @@ final class DuplicateForm implements ConditionalAbility {
 	public function args(): array {
 		return array(
 			'label'               => __( 'Duplicate Form', 'abilities-catalog-cf7' ),
-			'description'         => __( 'Duplicates a Contact Form 7 contact form. Creates an independent copy titled "{original title}_copy" carrying the source form\'s fields, mail settings, and messages, and returns the copy\'s new ID, shortcode, and edit_link. Edit the copy afterward with cf7/update-form. Discover source IDs with cf7/list-forms.', 'abilities-catalog-cf7' ),
-			'category'            => 'cf7',
+			'description'         => __( 'Duplicates a Contact Form 7 contact form. Creates an independent copy titled "{original title}_copy" carrying the source form\'s fields, mail settings, and messages, and returns the copy\'s new ID, shortcode, and edit_link. Edit the copy afterward with og-cf7/update-form. Discover source IDs with og-cf7/list-forms.', 'abilities-catalog-cf7' ),
+			'category'            => 'og-cf7',
 			'input_schema'        => array(
 				'type'                 => 'object',
 				'required'             => array( 'id' ),
@@ -59,7 +59,7 @@ final class DuplicateForm implements ConditionalAbility {
 					'id' => array(
 						'type'        => 'integer',
 						'minimum'     => 1,
-						'description' => __( 'The contact-form ID to copy. Discover IDs with cf7/list-forms.', 'abilities-catalog-cf7' ),
+						'description' => __( 'The contact-form ID to copy. Discover IDs with og-cf7/list-forms.', 'abilities-catalog-cf7' ),
 					),
 				),
 				'additionalProperties' => false,
@@ -112,7 +112,7 @@ final class DuplicateForm implements ConditionalAbility {
 	 * Permission check: CF7's edit capability for contact forms.
 	 *
 	 * A copy is a new form, so this requires `wpcf7_edit_contact_forms` (mapped to
-	 * `publish_pages` by default) — the same cap `cf7/create-form` uses.
+	 * `publish_pages` by default) — the same cap `og-cf7/create-form` uses.
 	 *
 	 * @param mixed $input The validated input data.
 	 * @return bool True if the current user may create contact forms.

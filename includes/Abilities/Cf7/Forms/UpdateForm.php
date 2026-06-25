@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Write ability: `cf7/update-form`.
+ * Write ability: `og-cf7/update-form`.
  *
  * Wraps `PUT contact-form-7/v1/contact-forms/<id>` via `rest_do_request()` (with
  * `context=save`, which CF7 requires to persist). CF7's `set_properties()` keeps
@@ -40,7 +40,7 @@ final class UpdateForm implements ConditionalAbility {
 	 * {@inheritDoc}
 	 */
 	public function name(): string {
-		return 'cf7/update-form';
+		return 'og-cf7/update-form';
 	}
 
 	/**
@@ -67,8 +67,8 @@ final class UpdateForm implements ConditionalAbility {
 
 		return array(
 			'label'               => __( 'Update Form', 'abilities-catalog-cf7' ),
-			'description'         => __( 'Updates an existing Contact Form 7 contact form by ID; send only the property groups you want to change. IMPORTANT: send each group COMPLETE — within a submitted mail/mail_2 block CF7 resets any field you omit to its default, so to change one mail field read the current mail object from cf7/get-form, modify it, and send the whole object back. The form body and additional_settings are strings (see their notes). Editing mail.recipient or mail.additional_headers reroutes or copies where every future submission is emailed and CF7 does not validate them; the result returns both the previous and the resulting recipient/headers for review. Discover IDs with cf7/list-forms.', 'abilities-catalog-cf7' ),
-			'category'            => 'cf7',
+			'description'         => __( 'Updates an existing Contact Form 7 contact form by ID; send only the property groups you want to change. IMPORTANT: send each group COMPLETE — within a submitted mail/mail_2 block CF7 resets any field you omit to its default, so to change one mail field read the current mail object from og-cf7/get-form, modify it, and send the whole object back. The form body and additional_settings are strings (see their notes). Editing mail.recipient or mail.additional_headers reroutes or copies where every future submission is emailed and CF7 does not validate them; the result returns both the previous and the resulting recipient/headers for review. Discover IDs with og-cf7/list-forms.', 'abilities-catalog-cf7' ),
+			'category'            => 'og-cf7',
 			'input_schema'        => array(
 				'type'                 => 'object',
 				'required'             => array( 'id' ),
@@ -77,7 +77,7 @@ final class UpdateForm implements ConditionalAbility {
 						'id'    => array(
 							'type'        => 'integer',
 							'minimum'     => 1,
-							'description' => __( 'The contact-form ID to update. Discover IDs with cf7/list-forms.', 'abilities-catalog-cf7' ),
+							'description' => __( 'The contact-form ID to update. Discover IDs with og-cf7/list-forms.', 'abilities-catalog-cf7' ),
 						),
 						'title' => array(
 							'type'        => 'string',
@@ -106,7 +106,7 @@ final class UpdateForm implements ConditionalAbility {
 	/**
 	 * Permission check: CF7's edit capability for contact forms.
 	 *
-	 * Encodes the catalog capability for `cf7/update-form`: the CF7 meta-cap
+	 * Encodes the catalog capability for `og-cf7/update-form`: the CF7 meta-cap
 	 * `wpcf7_edit_contact_form` (mapped to `publish_pages` by default). Coarse and
 	 * object-independent; the wrapped route surfaces the specific 404
 	 * (`wpcf7_not_found`) for a missing form so it is not masked as a permission

@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Write ability: `cf7/create-form`.
+ * Write ability: `og-cf7/create-form`.
  *
  * Wraps `POST contact-form-7/v1/contact-forms` via `rest_do_request()`, creating a
  * new contact form. Omitted property groups fall back to CF7's default template
@@ -42,7 +42,7 @@ final class CreateForm implements ConditionalAbility {
 	 * {@inheritDoc}
 	 */
 	public function name(): string {
-		return 'cf7/create-form';
+		return 'og-cf7/create-form';
 	}
 
 	/**
@@ -59,7 +59,7 @@ final class CreateForm implements ConditionalAbility {
 		return array(
 			'label'               => __( 'Create Form', 'abilities-catalog-cf7' ),
 			'description'         => __( 'Creates a new Contact Form 7 contact form and returns its ID, shortcode, and edit_link. Omitted groups fall back to CF7\'s default template (name/email/subject/message). The form body and additional_settings are passed as strings (see their parameter notes). Important: the mail.recipient and mail.additional_headers you set decide where every submission is emailed and CF7 does not validate them, so a Bcc: header would copy submissions elsewhere; the result echoes the resulting recipient and headers for review. After creating, surface edit_link and place the form with its shortcode (e.g. content/create-page).', 'abilities-catalog-cf7' ),
-			'category'            => 'cf7',
+			'category'            => 'og-cf7',
 			'input_schema'        => array(
 				'type'                 => 'object',
 				'required'             => array( 'title' ),
@@ -91,7 +91,7 @@ final class CreateForm implements ConditionalAbility {
 	/**
 	 * Permission check: CF7's edit capability for contact forms.
 	 *
-	 * Encodes the catalog capability for `cf7/create-form`: the CF7 meta-cap
+	 * Encodes the catalog capability for `og-cf7/create-form`: the CF7 meta-cap
 	 * `wpcf7_edit_contact_forms` (mapped to `publish_pages` by default, honoring a
 	 * redefined `WPCF7_ADMIN_READ_WRITE_CAPABILITY`). The wrapped route re-checks
 	 * the same cap underneath.
