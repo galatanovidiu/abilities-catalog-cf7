@@ -48,3 +48,14 @@ parameters:
 			identifier: function.notFound
 			message: '#Function wpcf7_contact_form not found\.#'
 			path: includes/Support/Cf7Plugin.php
+
+		# The Abilities Catalog's KnowledgeBundle scanner is the public extension API the
+		# renamed abilities_catalog_mcp_knowledge filter carries, but the catalog is a
+		# runtime-optional dependency absent from this add-on's analysis path (like CF7
+		# above). The reference is confined to this one integration file and is only
+		# reached when the catalog — which fires the filter and loads the class — is
+		# active.
+		-
+			identifier: class.notFound
+			message: '#GalatanOvidiu\\AbilitiesCatalog\\Mcp\\Knowledge\\KnowledgeBundle#'
+			path: includes/Mcp/Integration.php

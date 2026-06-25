@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GalatanOvidiu\AbilitiesCatalogCf7\Mcp;
 
-use GalatanOvidiu\AbilitiesCatalogCf7\Mcp\Skills\SetUpContactForm;
+use GalatanOvidiu\AbilitiesCatalog\Mcp\Knowledge\KnowledgeBundle;
 use GalatanOvidiu\AbilitiesCatalogCf7\Support\Cf7Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -17,14 +17,17 @@ if ( ! defined( 'ABSPATH' ) ) {
  * The catalog exposes one curated MCP tool per domain, not one per ability, and is
  * extensible through public filters. This class is the add-on's whole MCP surface:
  * it registers a `cf7` domain tool — its description and the `cf7/*` abilities it
- * owns, in one place — and adds the {@see SetUpContactForm} recipe to the
- * cross-cutting `skills` tool.
+ * owns, in one place — and contributes its own scanned OKF knowledge bundle (the
+ * `set-up-contact-form` concept under `includes/knowledge/`) to the cross-cutting
+ * `knowledge` tool.
  *
  * Every contribution is gated on {@see Cf7Plugin::isActive()} at filter-run time
  * (filters fire while the server boots, after plugins load), so when Contact Form 7
  * is inactive the `cf7/*` abilities do not register and no empty `cf7` tool or
- * dangling skill appears. The filters are catalog hooks: when the catalog or its
- * MCP server is absent, nothing applies them and the add-on stays inert here.
+ * dangling concept appears. The filters are catalog hooks: when the catalog or its
+ * MCP server is absent, nothing applies them and the add-on stays inert here — and
+ * the catalog's {@see KnowledgeBundle} scanner is then loaded too, since it is the
+ * catalog that fires the knowledge filter.
  *
  * @since 0.1.0
  */
@@ -51,7 +54,7 @@ final class Integration {
 	 */
 	public static function register(): void {
 		add_filter( 'abilities_catalog_mcp_domains', array( self::class, 'contributeDomain' ) );
-		add_filter( 'abilities_catalog_mcp_skills', array( self::class, 'contributeSkill' ) );
+		add_filter( 'abilities_catalog_mcp_knowledge', array( self::class, 'contributeKnowledge' ) );
 	}
 
 	/**
@@ -79,26 +82,29 @@ final class Integration {
 	}
 
 	/**
-	 * Adds the "set up a contact form" recipe to the `skills` tool.
+	 * Contributes the add-on's scanned knowledge bundle to the `knowledge` tool.
 	 *
-	 * The recipe chains the `cf7` domain into `content` (find/create a form, then
-	 * embed its shortcode on a page). Its body stays a callable so it costs no
-	 * context until a `skills` get resolves it. Skipped when CF7 is inactive.
+	 * The bundle is the `includes/knowledge/` directory of OKF concepts — here the
+	 * single `set-up-contact-form` recipe that chains the `cf7` domain into `content`
+	 * (find/create a form, then embed its shortcode on a page). The catalog scanner
+	 * reads this add-on's own directory and the catalog merges the returned bundle
+	 * under the `cf7` slug. A failed scan ({@see KnowledgeBundle::fromDirectory()}
+	 * returns a `WP_Error` on a missing directory) is skipped, never pushed. Skipped
+	 * entirely when CF7 is inactive.
 	 *
-	 * @param array<string, array{title:string, when_to_use:string, body:string|callable}> $skills Skill id => descriptor.
-	 * @return array<string, array{title:string, when_to_use:string, body:string|callable}> The map including the CF7 recipe.
+	 * @param array<int, mixed> $bundles The registered knowledge bundles.
+	 * @return array<int, mixed> The bundles, including this add-on's when CF7 is active.
 	 */
-	public static function contributeSkill( array $skills ): array {
+	public static function contributeKnowledge( array $bundles ): array {
 		if ( ! Cf7Plugin::isActive() ) {
-			return $skills;
+			return $bundles;
 		}
 
-		$skills[ SetUpContactForm::ID ] = array(
-			'title'       => SetUpContactForm::title(),
-			'when_to_use' => SetUpContactForm::whenToUse(),
-			'body'        => array( SetUpContactForm::class, 'body' ),
-		);
+		$bundle = KnowledgeBundle::fromDirectory( dirname( __DIR__ ) . '/knowledge', 'cf7' );
+		if ( ! is_wp_error( $bundle ) ) {
+			$bundles[] = $bundle;
+		}
 
-		return $skills;
+		return $bundles;
 	}
 }
