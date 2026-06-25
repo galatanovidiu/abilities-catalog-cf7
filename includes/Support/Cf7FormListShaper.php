@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Projects raw `contact-form-7/v1` list rows into flat summary rows for the
- * `cf7/list-forms` ability.
+ * `og-cf7/list-forms` ability.
  *
  * CF7's list row is already small — `id`, `hash`, `slug`, `title`, `locale` — but
  * it omits the one field a consumer needs to place a form: the shortcode. This
@@ -56,7 +56,7 @@ final class Cf7FormListShaper {
 			'properties'           => array(
 				'id'        => array(
 					'type'        => 'integer',
-					'description' => __( 'The contact-form ID. Read the full form with cf7/get-form.', 'abilities-catalog-cf7' ),
+					'description' => __( 'The contact-form ID. Read the full form with og-cf7/get-form.', 'abilities-catalog-cf7' ),
 				),
 				'hash'      => array(
 					'type'        => 'string',

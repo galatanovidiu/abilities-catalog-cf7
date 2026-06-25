@@ -1,6 +1,6 @@
 <?php
 /**
- * Integration tests for the cf7/duplicate-form ability.
+ * Integration tests for the og-cf7/duplicate-form ability.
  *
  * @package AbilitiesCatalogCf7\Tests
  */
@@ -13,23 +13,23 @@ use WP_Error;
 use WP_Post;
 
 /**
- * Exercises cf7/duplicate-form: an independent persisted copy, and the missing
+ * Exercises og-cf7/duplicate-form: an independent persisted copy, and the missing
  * source 404.
  */
 final class DuplicateFormTest extends Cf7FormsTestCase {
 
 	public function test_ability_is_registered(): void {
-		$ability = wp_get_ability( 'cf7/duplicate-form' );
+		$ability = wp_get_ability( 'og-cf7/duplicate-form' );
 
 		$this->assertNotNull( $ability );
-		$this->assertSame( 'cf7/duplicate-form', $ability->get_name() );
+		$this->assertSame( 'og-cf7/duplicate-form', $ability->get_name() );
 	}
 
 	public function test_duplicate_creates_independent_copy(): void {
 		$this->actingAs( 'administrator' );
 		$source = $this->seedForm( array( 'title' => 'Original' ) );
 
-		$result = wp_get_ability( 'cf7/duplicate-form' )->execute( array( 'id' => $source ) );
+		$result = wp_get_ability( 'og-cf7/duplicate-form' )->execute( array( 'id' => $source ) );
 
 		$this->assertIsArray( $result );
 		$this->assertSame(
@@ -50,7 +50,7 @@ final class DuplicateFormTest extends Cf7FormsTestCase {
 	public function test_missing_source_returns_404(): void {
 		$this->actingAs( 'administrator' );
 
-		$result = wp_get_ability( 'cf7/duplicate-form' )->execute( array( 'id' => 99999999 ) );
+		$result = wp_get_ability( 'og-cf7/duplicate-form' )->execute( array( 'id' => 99999999 ) );
 
 		$this->assertInstanceOf( WP_Error::class, $result );
 		$this->assertSame( 'wpcf7_not_found', $result->get_error_code() );
@@ -61,7 +61,7 @@ final class DuplicateFormTest extends Cf7FormsTestCase {
 		$source = $this->seedForm();
 		$this->actingAs( 'subscriber' );
 
-		$result = wp_get_ability( 'cf7/duplicate-form' )->execute( array( 'id' => $source ) );
+		$result = wp_get_ability( 'og-cf7/duplicate-form' )->execute( array( 'id' => $source ) );
 
 		$this->assertInstanceOf( WP_Error::class, $result );
 		$this->assertSame( 'ability_invalid_permissions', $result->get_error_code() );

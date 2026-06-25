@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Read ability: `cf7/get-form`.
+ * Read ability: `og-cf7/get-form`.
  *
  * Wraps `GET contact-form-7/v1/contact-forms/<id>` via `rest_do_request()` and
  * returns the form's full configuration (`properties`) plus the embeddable
@@ -33,7 +33,7 @@ final class GetForm implements ConditionalAbility {
 	 * {@inheritDoc}
 	 */
 	public function name(): string {
-		return 'cf7/get-form';
+		return 'og-cf7/get-form';
 	}
 
 	/**
@@ -49,8 +49,8 @@ final class GetForm implements ConditionalAbility {
 	public function args(): array {
 		return array(
 			'label'               => __( 'Get Form', 'abilities-catalog-cf7' ),
-			'description'         => __( 'Returns one Contact Form 7 contact form by ID: its title, locale, full configuration (form fields, mail and mail_2 settings, response messages, additional settings), and the ready-to-embed shortcode and hash. Use the shortcode to place the form on a page or post. Discover IDs with cf7/list-forms.', 'abilities-catalog-cf7' ),
-			'category'            => 'cf7',
+			'description'         => __( 'Returns one Contact Form 7 contact form by ID: its title, locale, full configuration (form fields, mail and mail_2 settings, response messages, additional settings), and the ready-to-embed shortcode and hash. Use the shortcode to place the form on a page or post. Discover IDs with og-cf7/list-forms.', 'abilities-catalog-cf7' ),
+			'category'            => 'og-cf7',
 			'input_schema'        => array(
 				'type'                 => 'object',
 				'required'             => array( 'id' ),
@@ -58,7 +58,7 @@ final class GetForm implements ConditionalAbility {
 					'id' => array(
 						'type'        => 'integer',
 						'minimum'     => 1,
-						'description' => __( 'The contact-form ID. Discover IDs with cf7/list-forms.', 'abilities-catalog-cf7' ),
+						'description' => __( 'The contact-form ID. Discover IDs with og-cf7/list-forms.', 'abilities-catalog-cf7' ),
 					),
 				),
 				'additionalProperties' => false,
@@ -112,7 +112,7 @@ final class GetForm implements ConditionalAbility {
 	 * Permission check: CF7's edit capability for contact forms.
 	 *
 	 * CF7 gates GET-one on the EDIT cap, not the read cap (asymmetric with
-	 * `cf7/list-forms`, which uses the read cap), so this matches it with the CF7
+	 * `og-cf7/list-forms`, which uses the read cap), so this matches it with the CF7
 	 * meta-cap `wpcf7_edit_contact_form` (mapped to `publish_pages` by default,
 	 * honoring a redefined `WPCF7_ADMIN_READ_WRITE_CAPABILITY`) — never widening
 	 * visibility past what CF7's own screen allows. This is a coarse type-level

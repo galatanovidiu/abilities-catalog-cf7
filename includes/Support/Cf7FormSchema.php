@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Shared JSON-Schema fragments for the Contact Form 7 form abilities.
  *
- * Three abilities return the same form `properties` object (`cf7/get-form`,
- * `cf7/create-form`, `cf7/update-form`) and two share the same writable input
+ * Three abilities return the same form `properties` object (`og-cf7/get-form`,
+ * `og-cf7/create-form`, `og-cf7/update-form`) and two share the same writable input
  * fields (create and update). Centralizing those fragments here keeps the
  * abilities in sync.
  *
@@ -83,7 +83,7 @@ final class Cf7FormSchema {
 			),
 			'form'                => array(
 				'type'        => 'string',
-				'description' => __( 'The form body as Contact Form 7 form-tag markup, e.g. "[text* your-name]\n[email* your-email]\n[submit \"Send\"]". This is a STRING, not the parsed object cf7/get-form returns: to edit an existing form, take its current markup from cf7/get-form\'s properties.form.content. Omit to keep CF7\'s default template (on create) or the current markup (on update).', 'abilities-catalog-cf7' ),
+				'description' => __( 'The form body as Contact Form 7 form-tag markup, e.g. "[text* your-name]\n[email* your-email]\n[submit \"Send\"]". This is a STRING, not the parsed object og-cf7/get-form returns: to edit an existing form, take its current markup from og-cf7/get-form\'s properties.form.content. Omit to keep CF7\'s default template (on create) or the current markup (on update).', 'abilities-catalog-cf7' ),
 			),
 			'mail'                => self::mailInputSchema( __( 'The primary email sent on every submission. Always active.', 'abilities-catalog-cf7' ) ),
 			'mail_2'              => self::mailInputSchema( __( 'An optional secondary email. Sent only when its "active" field is true (default false).', 'abilities-catalog-cf7' ) ),
@@ -112,7 +112,7 @@ final class Cf7FormSchema {
 			),
 			'additional_settings' => array(
 				'type'        => 'string',
-				'description' => __( 'Extra settings as raw text, one "name: value" per line (a STRING, not the parsed object cf7/get-form returns; take it from properties.additional_settings.content to edit). Flags such as "skip_mail: on" or "demo_mode: on" suppress the mail send.', 'abilities-catalog-cf7' ),
+				'description' => __( 'Extra settings as raw text, one "name: value" per line (a STRING, not the parsed object og-cf7/get-form returns; take it from properties.additional_settings.content to edit). Flags such as "skip_mail: on" or "demo_mode: on" suppress the mail send.', 'abilities-catalog-cf7' ),
 			),
 		);
 	}

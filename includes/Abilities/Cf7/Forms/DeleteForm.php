@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Destructive write ability: `cf7/delete-form`.
+ * Destructive write ability: `og-cf7/delete-form`.
  *
  * Wraps `DELETE contact-form-7/v1/contact-forms/<id>` via `rest_do_request()`.
  * CF7's delete is `wp_delete_post( $id, true )` — a force delete that bypasses the
@@ -32,7 +32,7 @@ final class DeleteForm implements ConditionalAbility {
 	 * {@inheritDoc}
 	 */
 	public function name(): string {
-		return 'cf7/delete-form';
+		return 'og-cf7/delete-form';
 	}
 
 	/**
@@ -48,8 +48,8 @@ final class DeleteForm implements ConditionalAbility {
 	public function args(): array {
 		return array(
 			'label'               => __( 'Delete Form', 'abilities-catalog-cf7' ),
-			'description'         => __( 'Permanently deletes a Contact Form 7 contact form by ID. This cannot be undone: CF7 force-deletes the form, bypassing the Trash, so there is no restore. Any page or post still embedding the form\'s shortcode will then show a "contact form not found" message. Returns the deleted form\'s title for confirmation. Discover IDs with cf7/list-forms.', 'abilities-catalog-cf7' ),
-			'category'            => 'cf7',
+			'description'         => __( 'Permanently deletes a Contact Form 7 contact form by ID. This cannot be undone: CF7 force-deletes the form, bypassing the Trash, so there is no restore. Any page or post still embedding the form\'s shortcode will then show a "contact form not found" message. Returns the deleted form\'s title for confirmation. Discover IDs with og-cf7/list-forms.', 'abilities-catalog-cf7' ),
+			'category'            => 'og-cf7',
 			'input_schema'        => array(
 				'type'                 => 'object',
 				'required'             => array( 'id' ),
@@ -57,7 +57,7 @@ final class DeleteForm implements ConditionalAbility {
 					'id' => array(
 						'type'        => 'integer',
 						'minimum'     => 1,
-						'description' => __( 'The contact-form ID to permanently delete. Discover IDs with cf7/list-forms.', 'abilities-catalog-cf7' ),
+						'description' => __( 'The contact-form ID to permanently delete. Discover IDs with og-cf7/list-forms.', 'abilities-catalog-cf7' ),
 					),
 				),
 				'additionalProperties' => false,
@@ -98,7 +98,7 @@ final class DeleteForm implements ConditionalAbility {
 	/**
 	 * Permission check: CF7's delete capability for contact forms.
 	 *
-	 * Encodes the catalog capability for `cf7/delete-form`: the CF7 meta-cap
+	 * Encodes the catalog capability for `og-cf7/delete-form`: the CF7 meta-cap
 	 * `wpcf7_delete_contact_form` (mapped to `publish_pages` by default). Coarse
 	 * and object-independent; the wrapped route surfaces the specific 404
 	 * (`wpcf7_not_found`) for a missing form.

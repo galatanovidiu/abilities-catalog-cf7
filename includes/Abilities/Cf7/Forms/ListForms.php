@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Read ability: `cf7/list-forms`.
+ * Read ability: `og-cf7/list-forms`.
  *
  * Wraps `GET contact-form-7/v1/contact-forms` via `rest_do_request()` and returns
  * each contact form as a flat summary row. CF7's list row carries `id`, `hash`,
@@ -35,7 +35,7 @@ final class ListForms implements ConditionalAbility {
 	 * {@inheritDoc}
 	 */
 	public function name(): string {
-		return 'cf7/list-forms';
+		return 'og-cf7/list-forms';
 	}
 
 	/**
@@ -51,8 +51,8 @@ final class ListForms implements ConditionalAbility {
 	public function args(): array {
 		return array(
 			'label'               => __( 'List Forms', 'abilities-catalog-cf7' ),
-			'description'         => __( 'Returns the site\'s Contact Form 7 contact forms as flat summary rows, each with its id, title, hash, and ready-to-embed shortcode. Use the shortcode to place a form on a page or post (e.g. with content/create-page); use cf7/get-form for one form\'s full configuration. Read-only: does not return the form fields, mail settings, or any submissions.', 'abilities-catalog-cf7' ),
-			'category'            => 'cf7',
+			'description'         => __( 'Returns the site\'s Contact Form 7 contact forms as flat summary rows, each with its id, title, hash, and ready-to-embed shortcode. Use the shortcode to place a form on a page or post (e.g. with content/create-page); use og-cf7/get-form for one form\'s full configuration. Read-only: does not return the form fields, mail settings, or any submissions.', 'abilities-catalog-cf7' ),
+			'category'            => 'og-cf7',
 			'input_schema'        => array(
 				'type'                 => 'object',
 				'properties'           => array(
@@ -88,7 +88,7 @@ final class ListForms implements ConditionalAbility {
 				'properties'           => array(
 					'items' => array(
 						'type'        => 'array',
-						'description' => __( 'The contact forms as flat summary rows. Use cf7/get-form for a single form\'s full configuration.', 'abilities-catalog-cf7' ),
+						'description' => __( 'The contact forms as flat summary rows. Use og-cf7/get-form for a single form\'s full configuration.', 'abilities-catalog-cf7' ),
 						'items'       => Cf7FormListShaper::formItemSchema(),
 					),
 					'total' => array(
@@ -114,7 +114,7 @@ final class ListForms implements ConditionalAbility {
 	/**
 	 * Permission check: CF7's read capability for contact forms.
 	 *
-	 * Encodes the catalog baseline for `cf7/list-forms`: the CF7 meta-cap
+	 * Encodes the catalog baseline for `og-cf7/list-forms`: the CF7 meta-cap
 	 * `wpcf7_read_contact_forms` (mapped to `edit_posts` by default, honoring a
 	 * site that redefines `WPCF7_ADMIN_READ_CAPABILITY`). The meta-cap is unmapped
 	 * when CF7 is inactive, so the explicit activity guard keeps the denial clean.
