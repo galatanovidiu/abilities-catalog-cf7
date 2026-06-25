@@ -51,6 +51,16 @@ tests_add_filter(
 			require_once $cf7;
 		}
 
+		// Load the Abilities Catalog (a sibling plugin in the test env) so the MCP
+		// integration can resolve the catalog's KnowledgeBundle scanner: the renamed
+		// abilities_catalog_mcp_knowledge filter now carries scanned bundle objects, so
+		// the cross-repo contract is only real with the catalog present. Guarded so the
+		// suite still boots if the catalog is absent.
+		$catalog = dirname(TESTS_REPO_ROOT_DIR) . '/abilities-catalog/abilities-catalog.php';
+		if (is_readable($catalog)) {
+			require_once $catalog;
+		}
+
 		// Use require (not require_once) so the plugin file always loads here.
 		require TESTS_REPO_ROOT_DIR . '/abilities-catalog-cf7.php';
 	}
