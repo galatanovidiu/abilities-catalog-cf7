@@ -2,9 +2,9 @@
 /**
  * Plugin Name:       Abilities Catalog — Contact Form 7
  * Plugin URI:        https://github.com/galatanovidiu/abilities-catalog-cf7
- * Description:       Registers Contact Form 7 forms as Abilities API abilities (list, read, create, update, duplicate, delete). An add-on for Abilities Catalog: it works standalone on the core Abilities API, and when the Abilities Catalog MCP server is active it contributes a "forms" domain tool and a setup knowledge concept.
- * Version:           0.1.1
- * Requires at least: 7.0
+ * Description:       Registers Contact Form 7 forms as Abilities API abilities (list, read, create, update, duplicate, delete). An add-on for Abilities Catalog: it works standalone on the core Abilities API, and when the Abilities Catalog MCP server is active it contributes a "contact-form-7" domain tool and a setup knowledge concept.
+ * Version:           0.1.0
+ * Requires at least: 6.9
  * Requires PHP:      8.1
  * Requires Plugins:  contact-form-7
  * Author:            Ovidiu Galatan
@@ -62,7 +62,7 @@ add_action(
 		// absent while Contact Form 7 is inactive.
 		( new Registry() )->register();
 
-		// The Abilities API ships with WordPress 7.0; without it there is nothing to
+		// The Abilities API ships with WordPress 6.9; without it there is nothing to
 		// expose, so the optional MCP integration below has no hooks to attach to.
 		if ( ! function_exists( 'wp_register_ability' ) ) {
 			return;

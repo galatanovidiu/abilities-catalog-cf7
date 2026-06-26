@@ -4,7 +4,7 @@ Guidance for AI coding agents working in this repository.
 
 ## What this is
 
-A WordPress plugin that registers Contact Form 7 (CF7) forms on the **Abilities API** (ships in WP 7.0 core) so any consumer can list/get/create/update/duplicate/delete CF7 forms. It is an **add-on for Abilities Catalog** but works standalone on the core Abilities API — the catalog is optional. CF7 is a hard runtime dependency: while CF7 is inactive the `cf7/*` abilities do not register at all (absent, not registered-and-denying).
+A WordPress plugin that registers Contact Form 7 (CF7) forms on the **Abilities API** (ships in WP 6.9 core) so any consumer can list/get/create/update/duplicate/delete CF7 forms. It is an **add-on for Abilities Catalog** but works standalone on the core Abilities API — the catalog is optional. CF7 is a hard runtime dependency: while CF7 is inactive the `og-cf7/*` abilities do not register at all (absent, not registered-and-denying).
 
 Namespace: `GalatanOvidiu\AbilitiesCatalogCf7\` → `includes/`. Runtime uses a **no-build PSR-4 autoloader** in `abilities-catalog-cf7.php` (no Composer step for runtime code; Composer is dev-only).
 
@@ -36,7 +36,7 @@ npm run test:php -- --filter CreateFormTest
 
 **Three contracts** (`includes/Contracts/`):
 - `Ability` — `name()` (`namespace/verb-resource`, kebab-case) + `args()` (the full `wp_register_ability()` arg array).
-- `ConditionalAbility extends Ability` — adds `isAvailable()`. The Registry registers it **only** when its dependency is present. All `cf7/*` abilities are conditional, gated on CF7. `isAvailable()` is checked at registration/filter time (after `plugins_loaded`), never at file load or in the constructor.
+- `ConditionalAbility extends Ability` — adds `isAvailable()`. The Registry registers it **only** when its dependency is present. All `og-cf7/*` abilities are conditional, gated on CF7. `isAvailable()` is checked at registration/filter time (after `plugins_loaded`), never at file load or in the constructor.
 - `CategoryProvider` — one per group, owns category slugs (global to the Abilities API — don't reuse a slug for a different meaning).
 
 **Annotation guard (hard gate in `registerAbilities()`).** Read-only abilities register. A write registers only if it explicitly sets a boolean `annotations.destructive` (`false` for ordinary writes, `true` for destructive like delete); a write that *omits* `destructive` is treated as unsafe and skipped with `_doing_it_wrong()`. Registration ≠ exposure: the catalog adapter gates browser exposure separately via the write/destructive settings. Capability (`permission_callback`) is always the hard authorization guard.
